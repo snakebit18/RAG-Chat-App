@@ -10,3 +10,4 @@ python-dotenv
 protobuf==3.20.3
 opentelemetry-exporter-otlp==1.22.0
 chromadb
+duckdb
