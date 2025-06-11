@@ -59,7 +59,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-os.environ['HUGGINGFACE_API_KEY']=os.getenv("HUGGINGFACE_API_KEY")
+os.environ['HUGGINGFACE_API_KEY']=st.secrets["HUGGINGFACE_API_KEY"]
 embeddings=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 
