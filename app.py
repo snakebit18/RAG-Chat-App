@@ -62,6 +62,12 @@ load_dotenv()
 os.environ['HUGGINGFACE_API_KEY']=st.secrets["HUGGINGFACE_API_KEY"]
 embeddings=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
+from chromadb.config import Settings
+
+chroma = Chroma(
+    persist_directory="db",
+    client_settings=Settings(chroma_db_impl="duckdb+parquet")
+)
 
 ## set up Streamlit 
 st.title("Conversational RAG With PDF uplaods and chat history")
@@ -99,7 +105,7 @@ if api_key:
     # Split and create embeddings for the documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
         splits = text_splitter.split_documents(documents)
-        vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
+        vectorstore = chroma.from_documents(documents=splits, embedding=embeddings)
         retriever = vectorstore.as_retriever()    
 
         contextualize_q_system_prompt=(
